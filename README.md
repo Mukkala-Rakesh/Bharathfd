@@ -1,73 +1,192 @@
+# BharatFD-assignment
+# BharatFd - FAQ Management System
+
 ## Overview
+BharatFd is a RESTful API service for managing Frequently Asked Questions (FAQs) with built-in caching, MongoDB integration, and support for multiple languages.
 
-This is an API for managing frequently asked questions (FAQs) that uses **Node.js, Express.js, and MongoDB** and supports multi-language translation and caching (Redis).
+### Key Features
+- CRUD operations for FAQs
+- Redis caching
+- code sanitization (For WYSIWYG Editor)
+- Multi-language support
+- MongoDB database
+- Docker containerization
+- TypeScript support
+- Automated testing
 
-## Pre-Requisites
+## Technology Stack
+- Node.js (v18+)
+- TypeScript
+- Express.js
+- MongoDB
+- Redis
+- Docker
+- Jest (Testing)
 
-Before setting up the application, ensure the following is installed:
-
-1. Node.js (latest version)
-2. MongoDB (Local or Cloud instance)
-3. Docker(for running redis)
+## Prerequisites
+- Node.js (v18+)
+- Docker Desktop
+- MongoDB
+- Redis
 
 ## Installation
 
-1. Clone the Repository:
-
+1. Clone repository:
 ```bash
-git clone https://github.com/namanrox/faq.git
-cd faq
-```
-
-2. Install the Dependencies:
-```
+git clone https://github.com/kartikey-shivam/bharatfd.git
+cd bharatfd
 npm install
 ```
 
-4. Set Up Environment Variables:
-```
-MONGO_URI=your_mongo_uri
-PORT=4000
-REDIS_HOST=your_redis_host
-REDIS_PORT=your_redis_port
-REDIS_USERNAME=your_redis_username
-REDIS_PASSWORD=your_redis_password
-FRONTEND_URL=your_frontend_url
-```
+# Development (.env)
+2. NODE_ENV=development
+MONGODB_URI=mongodb://localhost:27017/bharatfd
+REDIS_URL=redis://localhost:6379
+GOOGLE_APPLICATION_CREDENTIALS=../config/translate-key.json
 
-## Configuration
-1. Database Setup: Ensure MongoDB is running. You can use a local instance or a cloud-based MongoDB service.
+# Testing (.env.test)
+3. NODE_ENV=test
+MONGODB_URI=mongodb://localhost:27017/bharatfd_test
+REDIS_URL=redis://localhost:6379
+GOOGLE_APPLICATION_CREDENTIALS=../config/translate-key.json
 
-2. Redis setup: Use docker to run the Redis.
 
-## Running the Application
-1. Using NodeJS:
-```
-npm start
-```
-2. Using Docker:
-```
-docker-compose up --build
-```
-By default, the server will start on **port 4000**. You can change the port by modifying the PORT variable in your .env file, which must be made in the root directory.
+## Translation Setup
 
-### Verify the Server:
-Open your browser or API client and navigate to http://localhost:4000. You should see a response indicating that the server is running.
+### Google Cloud Configuration
+1. Create a Google Cloud Project
+2. Enable Cloud Translation API
+3. Create Service Account
+4. Download Service Account Key
 
-## API Endpoints
+### Credential Setup
+5. Copy template to actual credentials file:
+   ```bash
+   copy src\config\translate-key.template.json src\config\translate-key.json
 
-- Fetch all FAQs
-```
-GET /api/faqs
-```
+    {
+      "type": "service_account",
+      "project_id": "your-project-id",
+      "private_key_id": "your-key-id",
+      "private_key": "your-private-key",
+      "client_email": "your-service-account@project.iam.gserviceaccount.com",
+      "client_id": "your-client-id",
+      "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+      "token_uri": "https://oauth2.googleapis.com/token",
+      "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+      "client_x509_cert_url": "your-cert-url",
+      "universe_domain": "googleapis.com"
+    }
+    ```   
 
-- Add a new FAQ
-```
-POST /api/faqs
+# Running it on localhost:3000
+4. npm run dev
+
+# Building and running production build
+npm run build
+npm run dev
+
+# Running tests
+5. npm test
+
+## API Documentation
+```bash
+POST /api/faqs/create
 Content-Type: application/json
-Body: { "question": "Your question?", "answer": "The answer." }
+
+{
+  "question": "What is BharatFd?",
+  "answer": "A FAQ management system",
+  "isActive": true
+}
+
+# Get all FAQs
+GET /api/faqs
+
+# Get a specific FAQ
+GET /api/faqs/:id
+
+# Update a FAQ
+PUT /api/faqs/:id
+Content-Type: application/json
+
+{
+  "question": "Updated question",
+  "answer": "Updated answer"
+}
+
+
+# Delete a FAQ
+DELETE /api/faqs/:id
+
 ```
 
-- Delete an FAQ
+## Docker
+
+# Start services
+docker-compose up -d
+
+
+# Stop services
+docker-compose down
+
+# View logs
+docker-compose logs -f
+
+Services
+API: http://localhost:8000
+MongoDB: mongodb://localhost:27017
+Redis: redis://localhost:6379
+
+
+## Project Structure
+
+```bash
+bharatfd/
+├── src/
+│   ├── config/
+│   │   ├── db.config.ts
+│   │   ├── sanitize.config.ts
+│   │   ├── translate-key.template.json
+│   │   └── translate-key.json
+│   ├── controllers/
+│   │   └── FAQController.ts
+│   ├── middlewares/
+│   │   ├── cache.ts
+│   │   ├── sanitizationMiddleware.ts
+│   │   └── validationMiddleware.ts
+│   ├── models/
+│   │   └── FAQ.ts
+│   ├── routes/
+│   │   └── faqRoutes.ts
+│   ├── services/
+│   │   └── TranslationService.ts
+│   ├── validators/
+│   │   └── faqValidator.ts
+│   └── tests/
+│       ├── integration/
+│       │   └── faq.test.ts
+│       └── unit/
+│           ├── FAQ.test.ts
+│           └── TranslationService.test.ts
+├── docker/
+│   ├── api.Dockerfile
+│   └── redis.Dockerfile
+├── .env
+├── .env.example
+├── .gitignore
+├── docker-compose.yml
+├── package.json
+└── tsconfig.json
 ```
-DELETE /api/faqs/:id
+
+# Contributing
+Fork repository
+Create feature branch
+Commit changes
+Push to branch
+Create Pull Request
+
+
+
+# BharatFD-Assignment
