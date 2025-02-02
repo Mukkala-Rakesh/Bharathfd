@@ -1,13 +1,13 @@
-# **FAQ Management System**
+# BharatFD-assignment
+# BharatFd - FAQ Management System
 
-This is a Django-based FAQ management system that supports multi-language translations, a WYSIWYG editor for answers, and a REST API for managing FAQs. The project uses Redis for caching and supports automated translations using the `googletrans` library.
+## Overview
+BharatFd is a RESTful API service for managing Frequently Asked Questions (FAQs) with built-in caching, MongoDB integration, and support for multiple languages.
 
----
-
-## **Features**
-- **WYSIWYG Editor**: Rich text editor for FAQ answers.
-- **Multi-language Support**: Automatically translates FAQs into Hindi and Bengali, etc.
-- **REST API**: Manage FAQs with language-specific responses.
+### Key Features
+- CRUD operations for FAQs
+- Redis caching
+- code sanitization (For WYSIWYG Editor)
 - **Caching**: Uses Redis to cache translations for improved performance.
 - **Admin Panel**: User-friendly interface for managing FAQs.
 
